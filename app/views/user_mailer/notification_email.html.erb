@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<h1>Welcome to Show</h1>
+<p>
+  your username is: <%= @user.username %>.<br>
+</p>
+<p>
+  Your favorite <b><%= @show.name %></b> serial start on <b><%= @show.timing.strftime("%H:%M %p") %></b>
+</p>
+<p>Thanks for joining and have a great day!</p>
+</body>
+</html>

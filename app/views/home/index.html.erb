@@ -1,0 +1,59 @@
+<% content_for :top_content do %>
+  <div class="jumbotron">
+    <div class="container">
+      <h2>TV Shows.</h2>
+    </div>
+  </div>
+
+  <div class="container">
+  <table id="serial_data" class="display" style="width:100%">
+        <thead>
+            <tr>
+				<th>Channel Name</th>
+				<th>Timing</th>
+				<th>Shows</th>
+				<th>Mark as favorite</th>
+		     </tr>
+        </thead>
+        <tbody>
+           	<% if @tv_shows.present? %>
+			  <% @tv_shows.each do |tv_show| %>
+			  <tr>
+			    <td><%= tv_show&.channel&.name %></td>
+			    <td><%= tv_show&.timing.try(:strftime, '%I:%M %p') %></td>
+			    <td><%= tv_show&.name %></td>
+			    <td>
+			    	<% if current_user.present? %>
+			    		<% if current_user.favorited?(tv_show)  %>
+			    			<%= link_to 'Remove From Favourite', unsubscribed_user_home_index_path(show_id: tv_show.id, user_id: current_user.id), class: 'btn btn-danger btn-sm', 'data-id': tv_show.id %>
+			    		<% else %>
+			    			<%= link_to 'Mark As Favourite', add_subscribe_user_home_index_path(show_id: tv_show.id, user_id: current_user.id), class: 'btn btn-primary btn-sm', 'data-id': tv_show.id %>
+			    		<% end %>
+			    	<% else %>
+			    		<%= link_to 'Mark As Favourite', root_path, class: 'btn btn-primary btn-sm', 'data-id': tv_show.id %>
+			    	<% end %>
+			    	
+			    </td>
+			  </tr>
+			  <% end %>
+			  <% else %>
+			  <tr>
+			    <td colspan="3" style="text-align: center;">Data does not found!</td>
+			  </tr>
+			<% end %>
+        </tbody>
+    </table>
+  </div>
+
+<% end %>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready( function () {
+    $('#serial_data').DataTable();
+} );
+
+
+</script>
